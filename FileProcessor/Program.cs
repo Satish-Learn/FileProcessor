@@ -41,7 +41,7 @@ namespace FileProcessor
                 StreamWriter("../../../../../Storage/Store" + DateTime.Now.Ticks.ToString() + store.Id + ".csv", false);
             foreach(Item item in store.Items)
             {
-                file.WriteLine(item);
+                file.WriteLine(item.ConvertToCSVString());
 
             }
             file.Close();
@@ -97,7 +97,7 @@ namespace FileProcessor
 
         public void AddItem(Item item)
         {
-            item.DiscountedPrice = item.Price + 0.95;
+            item.DiscountedPrice = item.Price * 0.95;
             Items.Add(item);
         }
     }
@@ -108,6 +108,11 @@ namespace FileProcessor
         public string SKU { get; set; }
         public double Price { get; set; }
         public double DiscountedPrice { get; set; }
+
+        public string ConvertToCSVString()
+        {
+            return SKU + "," + DiscountedPrice;
+        }
     }
     class Record
     {
